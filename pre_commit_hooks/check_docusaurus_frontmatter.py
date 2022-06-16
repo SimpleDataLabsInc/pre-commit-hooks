@@ -22,7 +22,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for filename in args.filenames:
         with open(filename, 'rb') as f:
             try:
-                check_docusaurus_frontmatter(filename.read())
+                check_docusaurus_frontmatter(f.read())
             except KeyError as exc:
                 print(f"{filename}: {exc}")
                 retval = 1
