@@ -1,6 +1,6 @@
 import argparse
 import markdown
-from typing import Sequence
+from typing import Sequence, Optional
 
 
 def check_docusaurus_frontmatter(input_str) -> bool:
@@ -13,7 +13,7 @@ def check_docusaurus_frontmatter(input_str) -> bool:
 
     True
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="*", help="Filenames to check")
 
