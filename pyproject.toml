@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pre-commit-hooks"
+version = "0.1.0"
+description = "Handy pre-commit hooks used at Prophecy"
+authors = ["Scott Lyons <scott@prophecy.io>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Markdown = "^3.3.7"
+markdown-full-yaml-metadata = "^2.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

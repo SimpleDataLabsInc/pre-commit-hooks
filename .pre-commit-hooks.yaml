@@ -1,0 +1,5 @@
+- id: check-docusaurus-frontmatter
+  name: Check Docusaurus frontmatter
+  description: Ensure that the minimum frontmatter settings are present
+  language: python
+  types: [md]
