@@ -22,7 +22,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
     retval = 0
     for filename in args.filenames:
-        with open(filename, 'rb') as f:
+        with open(filename, 'r') as f:
             try:
                 check_docusaurus_frontmatter(f.read())
             except KeyError as exc:
