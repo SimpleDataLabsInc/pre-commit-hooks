@@ -7,7 +7,7 @@ def check_docusaurus_frontmatter(input_str) -> bool:
     md = markdown.Markdown(extensions=['full_yaml_metadata'])
     md.convert(input_str)
     if not md.Meta:
-        raise KeyError(f"missing frontmatter '{input_str[:50]}'")
+        raise KeyError(f"missing frontmatter, got {md.Meta}")
     mandatory_keys = ("title", "id", "description", "sidebar_position", "tags")
     for k in mandatory_keys:
         if k not in md.Meta:
