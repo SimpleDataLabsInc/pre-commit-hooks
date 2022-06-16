@@ -3,4 +3,4 @@
   description: Ensure that the minimum frontmatter settings are present
   language: python
   entry: check_docusaurus_frontmatter
-  types: [md]
+  types: [markdown]
