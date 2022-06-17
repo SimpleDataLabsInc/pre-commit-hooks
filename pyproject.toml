@@ -12,6 +12,7 @@ markdown-full-yaml-metadata = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
+pre-commit = "^2.19.0"
 
 [tool.poetry.scripts]
 check-docusaurus-frontmatter = "pre_commit_hooks.check_docusaurus_frontmatter:main"
