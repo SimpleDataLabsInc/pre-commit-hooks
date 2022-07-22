@@ -4,3 +4,15 @@
   language: python
   entry: check-docusaurus-frontmatter
   types: [markdown]
+- id: commit-message-reuse
+  name: Commit Message reuse prevention
+  description: Prevents commit messages from being reused
+  language: python
+  entry: commit-message-reuse
+  stages: [commit-msg]
+- id: word-veto
+  name: Veto certain words/typos from being committed in Markdown files
+  language: python
+  entry: word-veto
+  types: [markdown]
+  stages: [pre-commit]
