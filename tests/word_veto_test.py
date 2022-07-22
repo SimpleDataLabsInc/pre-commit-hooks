@@ -11,3 +11,9 @@ def test_veto() -> None:
     with pytest.raises(ValueError, match="The vetoed word 'dataframe' "
                        'has been found in'):
         word_veto.check([bad_doc], badwords=['dataframe'])
+
+
+def test_veto_link() -> None:
+    bad_doc = Path('.') / 'tests' / 'resources' / 'bad_link.md'
+    word_veto.check([bad_doc], badwords=['spark'])
+    assert True

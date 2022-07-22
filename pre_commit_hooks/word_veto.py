@@ -8,13 +8,13 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
     mdx_fence = re.compile('````.*?````', re.DOTALL)
     code_fence = re.compile('```.*?```', re.DOTALL)
     inline_fence = re.compile('`.*?`', re.DOTALL)
-    ext_link = re.compile(r'(\(https?://.*\))')
+    ext_link = re.compile(r'(\[[^\]]+])\([^\)]+\)')
     for f in files:
         text = open(f).read()
         text = mdx_fence.sub('', text)
         text = code_fence.sub('', text)
         text = inline_fence.sub('', text)
-        text = ext_link.sub('', text)
+        text = ext_link.sub(r'\1', text)
         for word in badwords:
             if word in text:
                 raise ValueError(
