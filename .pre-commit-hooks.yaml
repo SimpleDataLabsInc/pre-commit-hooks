@@ -15,4 +15,4 @@
   language: python
   entry: word-veto
   types: [markdown]
-  stages: [pre-commit]
+  stages: [commit]
