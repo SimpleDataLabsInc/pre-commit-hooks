@@ -19,7 +19,7 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
             if word in text:
                 raise ValueError(
                     f"The vetoed word '{word}' has been "
-                    'found in {str(f)}')
+                    f'found in {str(f)}')
 
 
 def main():
