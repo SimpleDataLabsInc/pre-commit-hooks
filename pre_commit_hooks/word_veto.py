@@ -12,6 +12,10 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
     ext_link = re.compile(r'(\[[^\]]+])\([^\)]+\)')
     found = 0
     for f in files:
+        if not f.exists():
+            print(f"Unable to open file '{f}'")
+            found = 1
+            break
         text = open(f).read()
         text = mdx_fence.sub('', text)
         text = code_fence.sub('', text)
