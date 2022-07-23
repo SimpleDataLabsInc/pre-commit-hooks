@@ -9,6 +9,7 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
     code_fence = re.compile('```.*?```', re.DOTALL)
     inline_fence = re.compile('`.*?`', re.DOTALL)
     ext_link = re.compile(r'(\[[^\]]+])\([^\)]+\)')
+    found = 0
     for f in files:
         text = open(f).read()
         text = mdx_fence.sub('', text)
@@ -16,10 +17,13 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
         text = inline_fence.sub('', text)
         text = ext_link.sub(r'\1', text)
         for word in badwords:
-            if word in text:
-                raise ValueError(
-                    f"The vetoed word '{word}' has been "
-                    f'found in {str(f)}')
+            matcher = re.compile(fr'(.{{0,15}}{word}.{{0,15}})')
+            for match in matcher.finditer(text):
+                found = 1
+                print(f"Vetoed word '{word}' found in {str(f)}): "
+                      f"'{match.groups()[0]}'")
+
+    raise typer.Exit(code=found)
 
 
 def main():
