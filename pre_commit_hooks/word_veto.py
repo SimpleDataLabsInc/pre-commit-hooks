@@ -7,6 +7,7 @@ import re
 def check(files: List[Path], badwords: Optional[List[str]] = None):
     mdx_fence = re.compile('````.*?````', re.DOTALL)
     code_fence = re.compile('```.*?```', re.DOTALL)
+    preamble_fence = re.compile('---.*?---', re.DOTALL)
     inline_fence = re.compile('`.*?`', re.DOTALL)
     ext_link = re.compile(r'(\[[^\]]+])\([^\)]+\)')
     found = 0
@@ -15,6 +16,7 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
         text = mdx_fence.sub('', text)
         text = code_fence.sub('', text)
         text = inline_fence.sub('', text)
+        text = preamble_fence.sub('', text)
         text = ext_link.sub(r'\1', text)
         for word in badwords:
             matcher = re.compile(fr'(.{{0,15}}{word}.{{0,15}})')
