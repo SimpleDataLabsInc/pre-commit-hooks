@@ -12,6 +12,8 @@ tags:
 
 Removes rows with duplicate values of specified columns.
 
+Here & there
+
 ### Parameters
 
 | Parameter           | Description                                                                                                                                                                                                                                                                                     | Required |
@@ -28,6 +30,12 @@ Removes rows with duplicate values of specified columns.
 Allowing fenced segments to get away with vetoed words: `spark`
 
 Badword: spark dataframe
+
+| Parameter     | Description                                   | Required                                 |
+| :------------ | :-------------------------------------------- | :--------------------------------------- |
+| Dataframe     | Input dataframe on which changes are required | True                                     |
+| Target column | Output column name                            | False                                    |
+| Expression    | Expression to compute target column           | Required if a `Target column` is present |
 
 #### Rows to keep - `Any`
 

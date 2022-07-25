@@ -1,12 +1,17 @@
 import typer
-from typing import List, Optional
+from typing import Dict, List, Optional
 from pathlib import Path
 from functools import reduce
 import re
 
+# Badwords should be defined as --badwords "foo:bar,baz:bin"
+# Where it's a mapping of {bad word}:{replacement}
+
 
 def check(files: List[Path], badwords: Optional[str] = None):
-    badwords = badwords.split(',') if badwords else []
+    badwords: List[str] = badwords.split(',') if badwords else []
+    badwords: Dict[str, str] = dict(
+        (k, v) for k, v in [bw.split(':') for bw in badwords])
     # These are defined as (regex, replace_str)
     mdx_fence = re.compile('````.*?````', re.DOTALL), ''
     code_fence = re.compile('```.*?```', re.DOTALL), ''
@@ -29,12 +34,12 @@ def check(files: List[Path], badwords: Optional[str] = None):
         text = open(f).read()
         text = reduce(lambda t, r: r[0].sub(r[1], t), rules, text)
 
-        for word in badwords:
+        for (word, replacement) in badwords.items():
             matcher = re.compile(fr'(.{{0,15}}{word}.{{0,15}})')
             for match in matcher.finditer(text):
                 found = 1
-                print(f"Vetoed word '{word}' found in {str(f)}): "
-                      f"'{match.groups()[0]}'")
+                print(f"Veto: {str(f)}: '{match.groups()[0]}' "
+                      f"'{word}' -> '{replacement}'")
 
     raise typer.Exit(code=found)
 
