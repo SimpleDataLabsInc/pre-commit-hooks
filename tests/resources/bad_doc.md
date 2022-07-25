@@ -27,6 +27,8 @@ Removes rows with duplicate values of specified columns.
 
 Allowing fenced segments to get away with vetoed words: `spark`
 
+Badword: spark dataframe
+
 #### Rows to keep - `Any`
 
 ![Example usage of Deduplicate](./img/deduplicate_eg_1.png)

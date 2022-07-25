@@ -21,3 +21,12 @@ def test_veto_link() -> None:
         word_veto.check([bad_doc], badwords=['spark'])
 
     assert e.value.exit_code == 0
+
+
+def test_veto_iframe() -> None:
+    # Ignore external URLs
+    bad_doc = Path('.') / 'tests' / 'resources' / 'embeddedhtml.md'
+    with pytest.raises(typer.Exit) as e:
+        word_veto.check([bad_doc], ['git'])
+
+    assert e.value.exit_code == 0

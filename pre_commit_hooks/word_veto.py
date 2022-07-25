@@ -1,15 +1,23 @@
 import typer
 from typing import List, Optional
 from pathlib import Path
+from functools import reduce
 import re
 
 
 def check(files: List[Path], badwords: Optional[List[str]] = None):
-    mdx_fence = re.compile('````.*?````', re.DOTALL)
-    code_fence = re.compile('```.*?```', re.DOTALL)
-    preamble_fence = re.compile('---.*?---', re.DOTALL)
-    inline_fence = re.compile('`.*?`', re.DOTALL)
-    ext_link = re.compile(r'(\[[^\]]+])\([^\)]+\)')
+    # These are defined as (regex, replace_str)
+    mdx_fence = re.compile('````.*?````', re.DOTALL), ''
+    code_fence = re.compile('```.*?```', re.DOTALL), ''
+    preamble_fence = re.compile('---.*?---', re.DOTALL), ''
+    inline_fence = re.compile('`.*?`', re.DOTALL), ''
+    doc_links = re.compile(r'(\[[^\]]+])\([^\)]+\)'), '\1'
+
+    ignore_urls = re.compile(
+        'https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)', re.DOTALL), ''  # noqa: E501
+    rules = [mdx_fence, code_fence, preamble_fence,
+             inline_fence, ignore_urls, doc_links]
+
     found = 0
     for f in files:
         if not f.exists():
@@ -17,11 +25,8 @@ def check(files: List[Path], badwords: Optional[List[str]] = None):
             found = 1
             break
         text = open(f).read()
-        text = mdx_fence.sub('', text)
-        text = code_fence.sub('', text)
-        text = inline_fence.sub('', text)
-        text = preamble_fence.sub('', text)
-        text = ext_link.sub(r'\1', text)
+        text = reduce(lambda t, r: r[0].sub(r[1], t), rules, text)
+
         for word in badwords:
             matcher = re.compile(fr'(.{{0,15}}{word}.{{0,15}})')
             for match in matcher.finditer(text):
