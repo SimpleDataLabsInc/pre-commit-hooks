@@ -16,8 +16,9 @@ def check(files: List[Path], badwords: Optional[str] = None):
 
     ignore_urls = re.compile(
         'https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)', re.DOTALL), ''  # noqa: E501
+    ignore_divs = re.compile('<div.*?>', re.DOTALL), ''
     rules = [mdx_fence, code_fence, preamble_fence,
-             inline_fence, ignore_urls, doc_links]
+             inline_fence, ignore_urls, doc_links, ignore_divs]
 
     found = 0
     for f in files:
