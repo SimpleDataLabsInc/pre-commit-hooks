@@ -5,7 +5,8 @@ from functools import reduce
 import re
 
 
-def check(files: List[Path], badwords: Optional[List[str]] = None):
+def check(files: List[Path], badwords: Optional[str] = None):
+    badwords = badwords.split(',') if badwords else []
     # These are defined as (regex, replace_str)
     mdx_fence = re.compile('````.*?````', re.DOTALL), ''
     code_fence = re.compile('```.*?```', re.DOTALL), ''
