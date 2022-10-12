@@ -35,10 +35,15 @@ def check(files: List[Path], badwords: Optional[str] = None):
         text = reduce(lambda t, r: r[0].sub(r[1], t), rules, text)
 
         for (word, replacement) in badwords.items():
-            matcher = re.compile(fr'(.{{0,15}}{word}.{{0,15}})')
+            matcher = re.compile(fr'[\s\W]({word})[\s\W]')
             for match in matcher.finditer(text):
+                start = max(match.start(0) - 15, 0)
+                end = min(match.end(0) + 15, len(text))
+                before = text[start:match.start(0)]
+                after = text[match.end(0):end]
+                context = before + match.group(0) + after
                 found = 1
-                print(f"Veto: {str(f)}: '{match.groups()[0]}' "
+                print(f"Veto: {str(f)}: '{context}' "
                       f"'{word}' -> '{replacement}'")
 
     raise typer.Exit(code=found)

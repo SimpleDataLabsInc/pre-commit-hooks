@@ -38,3 +38,11 @@ def test_veto_ampersand() -> None:
         word_veto.check([bad_doc], '&:and')
 
     assert e.value.exit_code == 1
+
+
+def test_veto_not_in_the_middle_of_another_word() -> None:
+    bad_doc = Path('.') / 'tests' / 'resources' / 'management.md'
+    with pytest.raises(typer.Exit) as e:
+        word_veto.check([bad_doc], 'gem:Gem')
+
+    assert e.value.exit_code == 0

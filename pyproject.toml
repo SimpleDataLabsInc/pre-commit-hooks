@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pre-commit-hooks"
-version = "0.1.0"
+version = "0.2.0"
 description = "Handy pre-commit hooks used at Prophecy"
 authors = ["Scott Lyons <scott@prophecy.io>"]
 license = "MIT"
